@@ -12,7 +12,7 @@
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0.5rem;
   color: white;
 }
@@ -58,12 +58,11 @@
   border-radius: 10%;
 }
 
-.desc {
+/* .desc {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 0.3rem;
-}
+} */
 
 @media (min-width: 1024px) {
   .container {

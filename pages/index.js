@@ -5,26 +5,20 @@ import Card from "../Components/Card";
 import styles from "../styles/Home.module.css";
 
 import coffeeStore from "../lib/coffeeStore";
-import CoffeeImages from "../lib/CoffeeImages";
 
 export async function getStaticProps(context) {
   const LatLong = "19.12,72.89";
   const limit = 9;
   const Query = "Coffee";
   const CoffeeStoreData = await coffeeStore(Query, LatLong, limit);
-  const ImageData = await CoffeeImages();
   return {
     props: {
       coffeeStoreData: CoffeeStoreData,
-      coffeeStoreImage: ImageData,
     }, // will be passed to the page component as props
   };
 }
 
-export default function Home({ coffeeStoreData, coffeeStoreImage }) {
-  const Images = coffeeStoreImage.map(images => {
-      return images.urls.regular
-  })
+export default function Home( { coffeeStoreData } ) {
 
   return (
     <div className={styles.container}>
@@ -41,16 +35,31 @@ export default function Home({ coffeeStoreData, coffeeStoreImage }) {
         {coffeeStoreData.map((data, i) => {
           return (
             <Card
-              key={data.fsq_id}
-              name={data.name}
-              address={data.location.formatted_address}
+              key={data.id || i}
+              name={data.name|| "name"}
+              address={data.address || "address"}
+              // imgUrl={
+              //    "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+              // }
               imgUrl={
-                Images[i]
+                data.imgUrl || "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
               }
-              Url={data.fsq_id}
+              Url={data.id|| i}
             />
           );
         })}
+        {/* <Card
+          key={ 1}
+          name={"name"}
+          address={ "address"}
+          // imgUrl={
+          //    "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+          // }
+          imgUrl={
+            "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+          }
+          Url={1}
+        /> */}
       </div>
     </div>
   );
