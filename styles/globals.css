@@ -4,6 +4,12 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: url("/static/background.png");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: url("/static/background.png");
+  color: #373b64;
 }
 
 a {
@@ -13,4 +19,38 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background-color: none;
+  background: none;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  margin: 0;
+}
+
+
+.glass {
+  background: rgba(253, 253, 253, 0.45);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.g:hover {
+  background: rgba(253, 253, 253, 0.65);
 }

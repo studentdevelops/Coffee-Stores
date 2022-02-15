@@ -1,0 +1,45 @@
+.card {
+  display: grid;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+  width: 16rem;
+  transition: all 100ms ease-in-out;
+}
+
+.card:active {
+  transform: scale(0.95);
+}
+.img {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+
+@media only screen and (min-device-width: 640px) {
+  .card {
+    width: 18rem;
+  }
+}
+@media only screen and (min-device-width: 768px) {
+  .card {
+    width: 18rem;
+  }
+}
+@media only screen and (min-device-width: 1024px) {
+  .card {
+    width: 24rem;
+  }
+}
+@media only screen and (min-device-width: 1280px) {
+  .card {
+    width: 24rem;
+  }
+}
+@media only screen and (min-device-width: 1536px) {
+  .cardList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

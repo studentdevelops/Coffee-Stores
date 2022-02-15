@@ -1,0 +1,64 @@
+.container {
+  position: relative;
+  margin: 10%;
+  top: 10%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.btn {
+  z-index: 2;
+  font-size: 1rem;
+  background-color: #4f46e5;
+  padding: 1% 3%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/** Breakpoints:
+  sm: min-width: 640px;
+  md: min-width: 768px;
+  lg: min-width: 1024px;
+  xl: min-width: 1280px;
+  2xl: min-width: 1536px;
+**/
+
+@media only screen and (min-device-width: 640px) {
+  .container {
+    font-size: 1.1rem;
+    gap: 0.7rem;
+  }
+}
+@media only screen and (min-device-width: 768px) {
+  .container {
+    gap: 0.9rem;
+    
+  }
+  .btn {
+    font-size: 1.1rem;
+  }
+}
+@media only screen and (min-device-width: 1024px) {
+  .container {
+    font-size: 1.4rem;
+    gap: 1rem;
+  }
+
+}
+@media only screen and (min-device-width: 1280px) {
+  .container {
+    gap: 1.2rem;
+  }
+  .btn {
+    font-size: 1.3rem;
+  }
+}
+@media only screen and (min-device-width: 1536px) {
+  .container {
+    font-size: 1.8rem;
+    gap: 1.4rem;
+  }
+}
