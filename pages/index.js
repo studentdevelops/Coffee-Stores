@@ -18,7 +18,7 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function Home( { coffeeStoreData } ) {
+export default function Home({ coffeeStoreData }) {
 
   return (
     <div className={styles.container}>
@@ -29,22 +29,19 @@ export default function Home( { coffeeStoreData } ) {
       </Head>
       <Banner />
       <div className={styles.bannerImage}>
-        <Image src="/static/hero-image.png" height={480} width={1200} />
+        <Image src="/static/hero-image.png" height={380} width={1024} />
       </div>
+      <div><h2>Stores Near You</h2></div>
       <div className={styles.cardList}>
-        {coffeeStoreData.map((data, i) => {
+        {coffeeStoreData.map((data) => {
           return (
             <Card
-              key={data.id || i}
-              name={data.name|| "name"}
-              address={data.address || "address"}
-              // imgUrl={
-              //    "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
-              // }
+              key={data.id}
+              name={data.name}
+              address={data.address}
               imgUrl={
-                data.imgUrl || "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
-              }
-              Url={data.id|| i}
+                data.imgUrl}
+              Url={data.id}
             />
           );
         })}

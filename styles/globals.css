@@ -10,6 +10,7 @@ body {
   background-size: cover;
   background: url("/static/background.png");
   color: #373b64;
+  height: 100%;
 }
 
 a {

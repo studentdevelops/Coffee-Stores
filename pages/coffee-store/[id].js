@@ -59,7 +59,7 @@ const id = ({ coffeeStore}) => {
                         <Link href="/">
                             <a>
                                 <span>
-                                    <span>&#8592;</span> Back To Home<span></span>
+                                    <span className={styles.goBack}><span>&#8592;</span> Back To Home</span>
                                 </span>
                             </a>
                         </Link>
@@ -72,9 +72,9 @@ const id = ({ coffeeStore}) => {
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
-                    {coffeeStore.neighborhood && <p className={styles.desc}> <div><Image src="/icons/home.svg" height={24} width={24} /></div> {coffeeStore.neighborhood}</p>}
-                    <p className={styles.desc} > <div><Image src="/icons/locationMarker.svg" height={24} width={24} /></div> {coffeeStore.address}</p>
-                    <p className={styles.desc} > <div><Image src="/icons/star.svg" height={24} width={24} /></div> 1 </p>
+                    {coffeeStore.neighborhood && <p className={styles.desc}> <div><Image className={styles.img} src="/icons/home.svg" height={24} width={24} /></div> {coffeeStore.neighborhood}</p>}
+                    <p className={styles.desc} > <div><Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /></div> {coffeeStore.address}</p>
+                    <p className={styles.desc} > <div><Image className={styles.img} src="/icons/star.svg" height={24} width={24} /></div> 1 </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>
                 </div>
             </div>

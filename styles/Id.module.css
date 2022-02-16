@@ -58,11 +58,10 @@
   border-radius: 10%;
 }
 
-/* .desc {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-} */
+.goBack{
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 
 @media (min-width: 1024px) {
   .container {
