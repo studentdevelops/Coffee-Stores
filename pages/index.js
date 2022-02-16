@@ -5,12 +5,11 @@ import Card from "../Components/Card";
 import styles from "../styles/Home.module.css";
 
 import coffeeStore from "../lib/coffeeStore";
+import useTrackLocation from "../hooks/use-track-location";
+
 
 export async function getStaticProps(context) {
-  const LatLong = "19.12,72.89";
-  const limit = 9;
-  const Query = "Coffee";
-  const CoffeeStoreData = await coffeeStore(Query, LatLong, limit);
+  const CoffeeStoreData = await coffeeStore();
   return {
     props: {
       coffeeStoreData: CoffeeStoreData,
@@ -19,7 +18,8 @@ export async function getStaticProps(context) {
 }
 
 export default function Home({ coffeeStoreData }) {
-
+  const { handleLocation, LatLong, LocationErrorMsg } = useTrackLocation();
+  handleLocation();
   return (
     <div className={styles.container}>
       <Head>

@@ -25,7 +25,7 @@ export async function getStaticPaths() {
     const LatLong = "19.12,72.89";
     const limit = 9;
     const Query = "Coffee";
-    
+
     const paths = coffeeStoreData.map((data) => {
         return data.id
     })
@@ -39,8 +39,7 @@ export async function getStaticPaths() {
     };
 }
 
-const id = ({ coffeeStore}) => {
-
+const id = ({ coffeeStore }) => {
 
     const router = useRouter();
 
@@ -67,14 +66,14 @@ const id = ({ coffeeStore}) => {
                     </div>
                     <div>
                         <a href={coffeeStore.websiteUrl || ""} target="_blank" >
-                            <Image className={styles.img} src={ coffeeStore.imgUrl ||"https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"} height={550} width={650} />
+                            <Image className={styles.img} src={coffeeStore.imgUrl || "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"} height={550} width={650} />
                         </a>
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
-                    {coffeeStore.neighborhood && <p className={styles.desc}> <div><Image className={styles.img} src="/icons/home.svg" height={24} width={24} /></div> {coffeeStore.neighborhood}</p>}
-                    <p className={styles.desc} > <div><Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /></div> {coffeeStore.address}</p>
-                    <p className={styles.desc} > <div><Image className={styles.img} src="/icons/star.svg" height={24} width={24} /></div> 1 </p>
+                    {coffeeStore.neighborhood && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} />{coffeeStore.neighborhood}</p>}
+                    <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /> {coffeeStore.address}</p>
+                    <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} /> 1 </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>
                 </div>
             </div>
