@@ -1,9 +1,17 @@
+
+
 .bannerImage {
   position: absolute;
   top: 10%;
   right: 10%;
   outline: none;
   z-index: 0;
+}
+
+.title {
+  margin-top: 1.5rem;
+  margin-left: 4rem;
+  font-size: 1.5rem;
 }
 
 .cardList {

@@ -1,10 +1,12 @@
 import react, { useEffect, useState } from 'react'
-
+import { useContext } from 'react';
+import { ACTION_TYPES } from '../context/constains';
+import { StoreContext } from '../context/StoreContext';
 
 const useTrackLocation = () => {
   const [GeoAvailable, SetGeoAvailable] = useState(false);
-  const [LatLong, SetLatLong] = useState("");
-  const [LocationErrorMsg, SetLocationErrorMsg] = useState("");
+  const [FindingLocation, SetFindingLocation] = useState(false);
+  const [LocationErrorMsg, SetLocationErrorMsg] = useState(null);
   useEffect(() => {
     if ('geolocation' in navigator) {
       SetGeoAvailable(true);
@@ -12,16 +14,25 @@ const useTrackLocation = () => {
     }
   }, [])
 
-
+  const { Dispatch } = useContext(StoreContext);
   const success = (location) => {
+    SetFindingLocation(false);
     const latitude = location.coords.latitude;
     const longitude = location.coords.longitude;
-    SetLatLong(`${latitude},${longitude}`);
+
+    Dispatch({
+      type: ACTION_TYPES.SET_LAT_LONG,
+      payload: { LatLong: `${latitude},${longitude}` }
+    })
+
+    SetLocationErrorMsg("")
   }
   const error = (error) => {
-    SetLocationErrorMsg({error})
+    SetFindingLocation(false);
+    SetLocationErrorMsg({ error })
   }
   const handleLocation = () => {
+    SetFindingLocation(true);
     if (GeoAvailable) {
       navigator.geolocation.getCurrentPosition(success, error);
     }
@@ -29,8 +40,8 @@ const useTrackLocation = () => {
   }
   return {
     handleLocation,
-    LatLong,
-    LocationErrorMsg
+    LocationErrorMsg,
+    FindingLocation
   }
 
 }

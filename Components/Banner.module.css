@@ -9,6 +9,11 @@
   align-items: flex-start;
 }
 
+.error {
+  font-size: 1rem;
+  color: #c7c7c7;
+}
+
 .btn {
   z-index: 2;
   font-size: 1rem;
