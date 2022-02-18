@@ -34,27 +34,30 @@ export default function Home({ coffeeStoreData }) {
 
   const [coffeeStores, SetCoffeeStores] = useState(coffeeStoreData);
 
-  useEffect(async () => {
-    if (LatLong) {
-      try {
+  useEffect(() => {
+    const fetch = async () => {
+      if (LatLong) {
+        try {
 
-        const FetchedCoffeeStore = await coffeeStore(LatLong, 21);
-        SetCoffeeStores(FetchedCoffeeStore);
-        SetDefaultState(true);
+          const FetchedCoffeeStore = await coffeeStore(LatLong, 21);
+          SetCoffeeStores(FetchedCoffeeStore);
+          SetDefaultState(true);
 
-        Dispatch({
-          type: ACTION_TYPES.SET_COFFEE_STORES,
-          payload: {
-            CoffeeStores: FetchedCoffeeStore,
-          }
-        });
+          Dispatch({
+            type: ACTION_TYPES.SET_COFFEE_STORES,
+            payload: {
+              CoffeeStores: FetchedCoffeeStore,
+            }
+          });
 
-      } catch (error) {
-        SetCoffeeFetchError(error.message);
-        console.log("Internal Error 404");
+        } catch (error) {
+          SetCoffeeFetchError(error.message);
+          console.log("Internal Error 404");
 
+        }
       }
     }
+    fetch();
   }, [LatLong]);
 
   const onClickFind = (e) => {
@@ -72,7 +75,7 @@ export default function Home({ coffeeStoreData }) {
       </Head>
       <Banner LocationErrorMsg={LocationErrorMsg} coffeeFetchError={coffeeFetchError} ButtonText={FindingLocation ? "Locating" : "View stores nearby"} onClickFind={onClickFind} />
       <div className={styles.bannerImage}>
-        <Image src="/static/hero-image.png" height={380} width={1024} />
+        <Image src="/static/hero-image.png" height={380} width={1024} alt={"banner-Image"}/>
       </div>
       <div className={styles.title}>{defaultState ? <h2>Stores Near You</h2> : <h2>Mumbai Stores</h2>}</div>
       <div className={styles.cardList}>

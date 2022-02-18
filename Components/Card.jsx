@@ -9,7 +9,7 @@ const Card = ({ name, imgUrl, Url }) => {
       <a>
         <div className={classNames(styles.card, "glass", "g")}>
           {name}
-          <Image className={styles.img} src={imgUrl} height={180} width={300} />
+          <Image alt={"Coffee Store Card Image"} className={styles.img} src={imgUrl} height={180} width={300} />
         </div>
       </a>
     </Link>

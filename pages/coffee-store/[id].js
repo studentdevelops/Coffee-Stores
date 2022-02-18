@@ -36,7 +36,7 @@ export async function getStaticPaths() {
     };
 }
 
-const Id = (initialProps) => {
+const id = (initialProps) => {
     const { coffeeStore } = initialProps;
     const router = useRouter();
 
@@ -52,7 +52,7 @@ const Id = (initialProps) => {
 
     const [CoffeeStoreData, SetCoffeeStoreData] = useState(coffeeStore);
 
-    useEffect(async () => {
+    useEffect(() => {
         if (isEmpty(coffeeStore)) {
             if (CoffeeStores.length > 0) {
                 const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
@@ -62,6 +62,8 @@ const Id = (initialProps) => {
             }
         }
     }, [id])
+
+
     return (
         <div className={styles.layout}>
             <div className={styles.container}>
@@ -77,9 +79,8 @@ const Id = (initialProps) => {
                         <h3 className={styles.title}>{CoffeeStoreData.name}</h3>
                     </div>
                     <div>
-                        <a href={CoffeeStoreData.websiteUrl || ""} target="_blank" >
-                            <Image className={styles.img} src={CoffeeStoreData.imgUrl || "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"} height={550} width={650} />
-                        </a>
+
+                        <Image className={styles.img} alt={"Coffee Store Image"} src={CoffeeStoreData.imgUrl || "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"} height={550} width={650} />
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
@@ -93,4 +94,4 @@ const Id = (initialProps) => {
     );
 };
 
-export default Id;
+export default id;
