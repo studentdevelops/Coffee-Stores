@@ -36,7 +36,7 @@ export async function getStaticPaths() {
     };
 }
 
-const id = (initialProps) => {
+const Id = (initialProps) => {
     const { coffeeStore } = initialProps;
     const router = useRouter();
 
@@ -61,9 +61,7 @@ const id = (initialProps) => {
                 SetCoffeeStoreData(findCoffeeStores);
             }
         }
-    },[id])
-
-
+    }, [id])
     return (
         <div className={styles.layout}>
             <div className={styles.container}>
@@ -95,4 +93,4 @@ const id = (initialProps) => {
     );
 };
 
-export default id;
+export default Id;
