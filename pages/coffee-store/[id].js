@@ -1,14 +1,14 @@
-import coffeeStoreData from "../coffee-stores.json";
-import styles from "../../styles/Id.module.css";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import Image from "next/image";
-import Loading from "../../Components/Loading";
 import classNames from "classnames";
-import coffeeStore from "../../lib/coffeeStore";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from 'react';
+import Loading from "../../Components/Loading";
 import { StoreContext } from "../../context/StoreContext";
-import { useContext, useState, useEffect } from 'react';
+import coffeeStore from "../../lib/coffeeStore";
+import styles from "../../styles/Id.module.css";
 import { isEmpty } from "../../utils";
+import coffeeStoreData from "../coffee-stores.json";
 
 export async function getStaticProps({ params }) {
     const CoffeeStoreData = await coffeeStore();
@@ -35,7 +35,7 @@ export async function getStaticPaths() {
         fallback: true, // false or 'blocking'
     };
 }
-
+/* eslint-disable */
 const id = (initialProps) => {
     const { coffeeStore } = initialProps;
     const router = useRouter();
