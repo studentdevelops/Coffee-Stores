@@ -8,7 +8,6 @@ import { StoreContext } from "../../context/StoreContext";
 import coffeeStore from "../../lib/coffeeStore";
 import styles from "../../styles/Id.module.css";
 import { isEmpty } from "../../utils";
-import coffeeStoreData from "../coffee-stores.json";
 
 export async function getStaticProps({ params }) {
     const CoffeeStoreData = await coffeeStore();
