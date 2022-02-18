@@ -52,7 +52,7 @@ const id = (initialProps) => {
 
     const [CoffeeStoreData, SetCoffeeStoreData] = useState(coffeeStore);
 
-    useEffect(() => {
+    useEffect(async () => {
         if (isEmpty(coffeeStore)) {
             if (CoffeeStores.length > 0) {
                 const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
