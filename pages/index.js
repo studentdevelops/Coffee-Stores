@@ -23,7 +23,7 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function Home({ coffeeStoreData }) {
+export default function Home( initialProps ) {
 
   const { handleLocation, LocationErrorMsg, FindingLocation } = useTrackLocation();
   const [defaultState, SetDefaultState] = useState(false);
@@ -32,14 +32,14 @@ export default function Home({ coffeeStoreData }) {
   const { Dispatch, state } = useContext(StoreContext);
   const { CoffeeStores, LatLong } = state;
 
-  const [coffeeStores, SetCoffeeStores] = useState(coffeeStoreData);
+  const [coffeeStores, SetCoffeeStores] = useState( initialProps.coffeeStoreData );
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchStores = async () => {
       if (LatLong) {
         try {
-
-          const FetchedCoffeeStore = await coffeeStore(LatLong, 21);
+          const response = await fetch(`api/fetchStores?LatLong=${LatLong}&limit=21`)
+          const FetchedCoffeeStore = await response.json();
           SetCoffeeStores(FetchedCoffeeStore);
           SetDefaultState(true);
 
@@ -57,7 +57,7 @@ export default function Home({ coffeeStoreData }) {
         }
       }
     }
-    fetch();
+    fetchStores();
   }, [LatLong]);
 
   const onClickFind = (e) => {
@@ -71,13 +71,13 @@ export default function Home({ coffeeStoreData }) {
       <Head>
         <title>Coffee Connoisseur</title>
         <meta name="description" content="Find Your Favorite Coffee Shop" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/hero-icon.png" />
       </Head>
       <Banner LocationErrorMsg={LocationErrorMsg} coffeeFetchError={coffeeFetchError} ButtonText={FindingLocation ? "Locating" : "View stores nearby"} onClickFind={onClickFind} />
       <div className={styles.bannerImage}>
         <Image src="/static/hero-image.png" height={380} width={1024} alt={"banner-Image"}/>
       </div>
-      <div className={styles.title}>{defaultState ? <h2>Stores Near You</h2> : <h2>Mumbai Stores</h2>}</div>
+      <div className={styles.title}>{defaultState ? <h2>Stores Near You</h2> : <h2>Pune Stores</h2>}</div>
       <div className={styles.cardList}>
         {coffeeStores.map((data) => {
           return (

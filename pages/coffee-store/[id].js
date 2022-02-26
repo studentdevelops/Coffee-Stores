@@ -36,33 +36,63 @@ export async function getStaticPaths() {
 }
 /* eslint-disable */
 const id = (initialProps) => {
-    const { coffeeStore } = initialProps;
+    const CoffeeStoreFromInitialProp = initialProps.coffeeStore;
     const router = useRouter();
 
     if (router.isFallback) {
         return <Loading />;
     }
-    const onVoteClick = (e) => {
-        console.log("clicked");
-    }
+    
 
     const id = router.query.id;
     const { state: { CoffeeStores } } = useContext(StoreContext);
 
-    const [CoffeeStoreData, SetCoffeeStoreData] = useState(coffeeStore);
+    const [CoffeeStoreData, SetCoffeeStoreData] = useState(CoffeeStoreFromInitialProp);
+    const handleCreateCoffeeStore = async (handleCoffeeStore) => {
+        try {
+            const response = await fetch("/api/createCoffeeStore", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(handleCoffeeStore)
+            })
+            const results = await response.json();
+            // SetCoffeeStoreData(results);
+        } catch (error) {
+            console.error({ error })
+        }
+    }
 
-    useEffect(() => {
-        if (isEmpty(coffeeStore)) {
+    useEffect(async () => {
+        console.log({
+            message: "in useEffect",
+            CoffeeStoreData
+        })
+        if (isEmpty(CoffeeStoreData)) {
             if (CoffeeStores.length > 0) {
                 const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
                     return coffeeStore.id.toString() === id;
                 })
+                handleCreateCoffeeStore(findCoffeeStores);
                 SetCoffeeStoreData(findCoffeeStores);
+                return
             }
+            // else {
+            //     handleCreateCoffeeStore({id: id})
+            // }
         }
-    }, [id])
 
+        handleCreateCoffeeStore(CoffeeStoreData);
+    }, [id, initialProps, initialProps.coffeeStore])
 
+    const [votes, setVotes] = useState(1);
+
+    const onVoteClick = (e) => {
+        console.log("clicked");
+        let count=votes+1;
+        setVotes(count);
+    }
     return (
         <div className={styles.layout}>
             <div className={styles.container}>
@@ -85,7 +115,7 @@ const id = (initialProps) => {
                 <div className={classNames(styles.col2, "glass")}>
                     {CoffeeStoreData.neighborhood && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} />{CoffeeStoreData.neighborhood}</p>}
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /> {CoffeeStoreData.address}</p>
-                    <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} /> 1 </p>
+                    <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} /> {votes} </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>
                 </div>
             </div>
