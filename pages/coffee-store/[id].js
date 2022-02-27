@@ -42,7 +42,7 @@ const id = (initialProps) => {
     if (router.isFallback) {
         return <Loading />;
     }
-    
+
 
     const id = router.query.id;
     const { state: { CoffeeStores } } = useContext(StoreContext);
@@ -57,8 +57,6 @@ const id = (initialProps) => {
                 },
                 body: JSON.stringify(handleCoffeeStore)
             })
-            const results = await response.json();
-            // SetCoffeeStoreData(results);
         } catch (error) {
             console.log("in id file")
             console.error({ error })
@@ -66,15 +64,13 @@ const id = (initialProps) => {
     }
 
     useEffect(async () => {
-        console.log({
-            message: "in useEffect",
-            CoffeeStoreData
-        })
+
         if (isEmpty(CoffeeStoreData)) {
             if (CoffeeStores.length > 0) {
                 const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
                     return coffeeStore.id.toString() === id;
                 })
+
                 handleCreateCoffeeStore(findCoffeeStores);
                 SetCoffeeStoreData(findCoffeeStores);
                 return
@@ -91,7 +87,7 @@ const id = (initialProps) => {
 
     const onVoteClick = (e) => {
         console.log("clicked");
-        let count=votes+1;
+        let count = votes + 1;
         setVotes(count);
     }
     return (
