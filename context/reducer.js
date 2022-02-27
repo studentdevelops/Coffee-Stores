@@ -1,4 +1,4 @@
-import { ACTION_TYPES } from "./constains"
+import { ACTION_TYPES } from "./containts"
 
 export const initialState = {
     LatLong: "",

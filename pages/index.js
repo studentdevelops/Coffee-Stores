@@ -11,7 +11,7 @@ import useTrackLocation from "../hooks/use-track-location";
 
 import { useContext } from "react";
 import { StoreContext } from '../context/StoreContext';
-import { ACTION_TYPES } from "../context/constains";
+import { ACTION_TYPES } from "../context/containts";
 
 
 export async function getStaticProps(context) {
