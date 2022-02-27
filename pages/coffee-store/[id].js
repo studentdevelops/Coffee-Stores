@@ -60,6 +60,7 @@ const id = (initialProps) => {
             const results = await response.json();
             // SetCoffeeStoreData(results);
         } catch (error) {
+            console.log("in id file")
             console.error({ error })
         }
     }

@@ -1,5 +1,5 @@
 
-import {base} from "../../lib/airtable"
+import {fetchRecords, createRecords} from "../../lib/airtable"
 
 const createCoffeeStore = async (req, res) => {
     try {
@@ -9,16 +9,10 @@ const createCoffeeStore = async (req, res) => {
         }
 
         const { id } = req.body
-        const response = base('CoffeeStores').select({
-            filterByFormula: `id = "${id}"`
-        }).firstPage();
-        const results = await response;
+        const results = await fetchRecords(id);
         if (req.method === "POST") {
             if (results.length !== 0) {
-                res.json(
-                    results.map((data) => {
-                        return data.fields;
-                    })[0]);
+                res.json(results);
                 return
             } else {
                 if (!req.body.name || !req.body.address || !`${req.body.votes}` || !req.body.imgUrl) {
@@ -27,19 +21,8 @@ const createCoffeeStore = async (req, res) => {
                     });
                     return
                 }
-                const { name, address, neighborhood, votes, imgUrl } = req.body
-                const createdRecord = await base('CoffeeStores').create([
-                    {
-                        "fields": {
-                            "id": `${id}`,
-                            name,
-                            address,
-                            neighborhood: neighborhood[0] || "",
-                            votes: parseInt(votes) || 0,
-                            imgUrl,
-                        }
-                    },
-                ]);
+
+                const createRecorded = createRecords(req.body)
                 res.json("record created");
                 return
 
@@ -58,7 +41,8 @@ const createCoffeeStore = async (req, res) => {
         res.status(505);
         res.json({
             message: "something went wrong",
-            items: `${req.body.neighborhood}`
+            items: `${error}`,
+            file: "createCoffeeStore"
         });
     }
 
