@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from 'react';
+import useSWR from "swr";
 import Loading from "../../Components/Loading";
 import { StoreContext } from "../../context/StoreContext";
 import coffeeStore from "../../lib/coffeeStore";
@@ -48,6 +49,17 @@ const id = (initialProps) => {
     const { state: { CoffeeStores } } = useContext(StoreContext);
 
     const [CoffeeStoreData, SetCoffeeStoreData] = useState(CoffeeStoreFromInitialProp);
+    const [votes, setVotes] = useState(1);
+    const fetcher = (url) => fetch(url).then((res) => res.json());
+    const { data,error } = useSWR(`/api/fetchById?id=${id}`, fetcher)
+
+    useEffect(() => {
+        if (data && data.length>0) {
+            SetCoffeeStoreData(data[0]);
+            setVotes(data[0].votes);
+        }
+    }, [data])
+
     const handleCreateCoffeeStore = async (handleCoffeeStore) => {
         try {
             const response = await fetch("/api/createCoffeeStore", {
@@ -58,7 +70,6 @@ const id = (initialProps) => {
                 body: JSON.stringify(handleCoffeeStore)
             })
         } catch (error) {
-            console.log("in id file")
             console.error({ error })
         }
     }
@@ -81,12 +92,24 @@ const id = (initialProps) => {
         }
 
         handleCreateCoffeeStore(CoffeeStoreData);
+
+
     }, [id, initialProps, initialProps.coffeeStore])
 
-    const [votes, setVotes] = useState(1);
 
-    const onVoteClick = (e) => {
-        console.log("clicked");
+
+    const onVoteClick = async (e) => {
+        try {
+            const response = await fetch("/api/UpdateById", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id })
+            })
+        } catch (error) {
+            console.error({ error })
+        }
         let count = votes + 1;
         setVotes(count);
     }
@@ -110,7 +133,7 @@ const id = (initialProps) => {
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
-                    {CoffeeStoreData.neighborhood && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} />{CoffeeStoreData.neighborhood}</p>}
+                    {CoffeeStoreData.neighborhood!==" " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} />{CoffeeStoreData.neighborhood}</p>}
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /> {CoffeeStoreData.address}</p>
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} /> {votes} </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>

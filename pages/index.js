@@ -52,7 +52,6 @@ export default function Home( initialProps ) {
 
         } catch (error) {
           SetCoffeeFetchError(error.message);
-          console.log("in Index file")
           console.log("Internal Error 404");
 
         }
