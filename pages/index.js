@@ -72,7 +72,7 @@ export default function Home(initialProps) {
         <title>Coffee Connoisseur | Find CoffeeStore Near you</title>
         <link rel="icon" href="/hero-icon.ico" />
         <meta name="description" key="ogdesc" content="Come and Find Your Coffee Store to make it your every Adda. Explore Coffee Stores Near you." />
-        <meta property="og:image" content="metaImage.jpg" key="ogimage"/>
+        <meta property="og:image" content="/metaImage.jpg" key="ogimage"/>
       </Head>
       <Banner LocationErrorMsg={LocationErrorMsg} coffeeFetchError={coffeeFetchError} ButtonText={FindingLocation ? "Locating" : "View stores nearby"} onClickFind={onClickFind} />
       <div className={styles.bannerImage}>
