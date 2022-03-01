@@ -28,6 +28,7 @@
 }
 
 .btn {
+  padding: 0.5rem 1.3rem;
   cursor: pointer;
   background: rgb(33, 122, 255, 0.85);
   transition: all 80ms ease-in-out;
@@ -79,7 +80,7 @@
     gap: 0.6rem;
   }
   .btn {
-    padding: 0.7rem 1.3rem;
+    padding: 1rem 1.7rem;
   }
 
   .col {
