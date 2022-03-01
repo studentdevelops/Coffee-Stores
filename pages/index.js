@@ -70,18 +70,9 @@ export default function Home(initialProps) {
     <div className={styles.container}>
       <Head>
         <title>Coffee Connoisseur</title>
-        <meta name="title" content="Coffee Connoisseur"/>
         <link rel="icon" href="/hero-icon.png" />
-        <meta name="title" content="Coffee Connoisseur" />
         <meta name="description" key="ogdesc" content="Come and Find Your Coffee Store to make it your every Adda. Explore Coffee Stores Near you." />
-        <meta property="og:type" content="website" key="ogtitle"/>
-        <meta property="og:title" content="Coffee Connoisseur" />
-        <meta property="og:description" content="Come and Find Your Coffee Store to make it your every Adda. Explore Coffee Stores Near you." />
         <meta property="og:image" content="/metaImage.jpg" key="ogimage"/>
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content="Coffee Connoisseur" />
-        <meta property="twitter:description" key="ogdesc" content="Come and Find Your Coffee Store to make it your every Adda. Explore Coffee Stores Near you." />
-        <meta property="twitter:image" content="/metaImage.jpg" key="ogimage"/>
       </Head>
       <Banner LocationErrorMsg={LocationErrorMsg} coffeeFetchError={coffeeFetchError} ButtonText={FindingLocation ? "Locating" : "View stores nearby"} onClickFind={onClickFind} />
       <div className={styles.bannerImage}>

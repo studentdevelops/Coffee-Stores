@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { Head } from "next/document";
+import Head from "next/head";
 
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from 'react';
@@ -121,15 +121,7 @@ const CoffeeStore = (initialProps) => {
         <div className={styles.layout}>
             <Head>
                 <title>{name}</title>
-                <meta name="title" content={name} />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content="https://metatags.io/" />
-                <meta property="og:title" content="Coffee Connoisseur" />
                 <meta property="og:image" content={imgUrl} />
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:url" content="https://metatags.io/" />
-                <meta property="twitter:title" content="Coffee Connoisseur" />
-                <meta property="twitter:image" content={imgUrl} />
             </Head>
             <div className={styles.container}>
                 <div className={styles.col}>
