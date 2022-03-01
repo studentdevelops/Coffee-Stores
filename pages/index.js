@@ -58,7 +58,7 @@ export default function Home( initialProps ) {
       }
     }
     fetchStores();
-  }, [LatLong]);
+  }, [LatLong, Dispatch]);
 
   const onClickFind = (e) => {
     handleLocation();

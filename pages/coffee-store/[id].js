@@ -4,11 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from 'react';
 import useSWR from "swr";
-import Loading from "../../Components/Loading";
+
 import { StoreContext } from "../../context/StoreContext";
 import coffeeStore from "../../lib/coffeeStore";
-import styles from "../../styles/Id.module.css";
 import { isEmpty } from "../../utils";
+
+import Loading from "../../Components/Loading";
+import styles from "../../styles/Id.module.css";
 
 export async function getStaticProps({ params }) {
     const CoffeeStoreData = await coffeeStore();
@@ -36,10 +38,10 @@ export async function getStaticPaths() {
     };
 }
 
-const id = (initialProps) => {
+const CoffeeStore = (initialProps) => {
     const CoffeeStoreFromInitialProp = initialProps.coffeeStore;
-    const router = useRouter();
-    const id = router.query.id;
+    const Router = useRouter();
+    const id = Router.query.id || "";
     const { state: { CoffeeStores } } = useContext(StoreContext);
     const [CoffeeStoreData, SetCoffeeStoreData] = useState(CoffeeStoreFromInitialProp || {});
     const [votes, setVotes] = useState(1);
@@ -67,18 +69,20 @@ const id = (initialProps) => {
         }
     }
 
-    useEffect(async () => {
-
-        if (isEmpty(CoffeeStoreData)) {
-            if (CoffeeStores.length > 0) {
-                const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
-                    return coffeeStore.id.toString() === id;
-                })
-                handleCreateCoffeeStore(findCoffeeStores);
-                SetCoffeeStoreData(findCoffeeStores);
-                return
+    useEffect(() => {
+        (async function () {
+            if (isEmpty(CoffeeStoreData)) {
+                if (CoffeeStores.length > 0) {
+                    const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
+                        return coffeeStore.id.toString() === id;
+                    })
+                    handleCreateCoffeeStore(findCoffeeStores);
+                    SetCoffeeStoreData(findCoffeeStores);
+                    return
+                }
             }
-        }
+        })
+
     }, [id, initialProps, initialProps.coffeeStore])
 
 
@@ -100,7 +104,7 @@ const id = (initialProps) => {
     }
 
 
-    if (router.isFallback) {
+    if (Router.isFallback) {
         return <Loading />;
     }
     const { name = "", imgUrl = "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80", neighborhood = "", address = "" } = CoffeeStoreData
@@ -112,7 +116,7 @@ const id = (initialProps) => {
                         <Link href="/">
                             <a>
                                 <span>
-                                    <span className={styles.goBack}><span>&#8592;</span> Back To Home</span>
+                                    <span className={styles.backKey}><span>&#8592;</span> Back To Home</span>
                                 </span>
                             </a>
                         </Link>
@@ -120,13 +124,13 @@ const id = (initialProps) => {
                     </div>
                     <div>
 
-                        <Image className={styles.img} alt={"Coffee Store Image"} src={imgUrl} height={550} width={650} />
+                        <Image className={styles.img} alt={"Coffee Store Image"} src={imgUrl} height={550} width={650}/>
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
-                    {neighborhood !== " " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} />{neighborhood}</p>}
-                    <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /> {address}</p>
-                    <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} /> {votes} </p>
+                    {neighborhood !== " " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} alt={""}/>{neighborhood}</p>}
+                    <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} alt={""} /> {address}</p>
+                    <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} alt={""} /> {votes} </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>
                 </div>
             </div>
@@ -134,4 +138,4 @@ const id = (initialProps) => {
     );
 };
 
-export default id;
+export default CoffeeStore;
