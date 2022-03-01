@@ -35,26 +35,19 @@ export async function getStaticPaths() {
         fallback: true, // false or 'blocking'
     };
 }
-/* eslint-disable */
+
 const id = (initialProps) => {
     const CoffeeStoreFromInitialProp = initialProps.coffeeStore;
     const router = useRouter();
-
-    if (router.isFallback) {
-        return <Loading />;
-    }
-
-
     const id = router.query.id;
     const { state: { CoffeeStores } } = useContext(StoreContext);
-
-    const [CoffeeStoreData, SetCoffeeStoreData] = useState(CoffeeStoreFromInitialProp);
+    const [CoffeeStoreData, SetCoffeeStoreData] = useState(CoffeeStoreFromInitialProp || {});
     const [votes, setVotes] = useState(1);
     const fetcher = (url) => fetch(url).then((res) => res.json());
-    const { data,error } = useSWR(`/api/fetchById?id=${id}`, fetcher)
+    const { data, error } = useSWR(`/api/fetchById?id=${id}`, fetcher)
 
     useEffect(() => {
-        if (data && data.length>0) {
+        if (data && data.length > 0) {
             SetCoffeeStoreData(data[0]);
             setVotes(data[0].votes);
         }
@@ -81,19 +74,11 @@ const id = (initialProps) => {
                 const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
                     return coffeeStore.id.toString() === id;
                 })
-
                 handleCreateCoffeeStore(findCoffeeStores);
                 SetCoffeeStoreData(findCoffeeStores);
                 return
             }
-            // else {
-            //     handleCreateCoffeeStore({id: id})
-            // }
         }
-
-        handleCreateCoffeeStore(CoffeeStoreData);
-
-
     }, [id, initialProps, initialProps.coffeeStore])
 
 
@@ -113,6 +98,12 @@ const id = (initialProps) => {
         let count = votes + 1;
         setVotes(count);
     }
+
+
+    if (router.isFallback) {
+        return <Loading />;
+    }
+    const { name = "", imgUrl = "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80", neighborhood = "", address = "" } = CoffeeStoreData
     return (
         <div className={styles.layout}>
             <div className={styles.container}>
@@ -125,16 +116,16 @@ const id = (initialProps) => {
                                 </span>
                             </a>
                         </Link>
-                        <h3 className={styles.title}>{CoffeeStoreData.name}</h3>
+                        <h3 className={styles.title}>{name}</h3>
                     </div>
                     <div>
 
-                        <Image className={styles.img} alt={"Coffee Store Image"} src={CoffeeStoreData.imgUrl || "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"} height={550} width={650} />
+                        <Image className={styles.img} alt={"Coffee Store Image"} src={imgUrl} height={550} width={650} />
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
-                    {CoffeeStoreData.neighborhood!==" " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} />{CoffeeStoreData.neighborhood}</p>}
-                    <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /> {CoffeeStoreData.address}</p>
+                    {neighborhood !== " " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} />{neighborhood}</p>}
+                    <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} /> {address}</p>
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} /> {votes} </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>
                 </div>
