@@ -39,12 +39,16 @@ export async function getStaticPaths() {
 }
 
 const CoffeeStore = (initialProps) => {
-    const CoffeeStoreFromInitialProp = initialProps.coffeeStore;
+
     const Router = useRouter();
     const id = Router.query.id || "";
+
+    const CoffeeStoreFromInitialProp = initialProps.coffeeStore;
     const { state: { CoffeeStores } } = useContext(StoreContext);
-    const [CoffeeStoreData, SetCoffeeStoreData] = useState(CoffeeStoreFromInitialProp || {});
+
+    const [CoffeeStoreData, SetCoffeeStoreData] = useState(CoffeeStoreFromInitialProp);
     const [votes, setVotes] = useState(1);
+
     const fetcher = (url) => fetch(url).then((res) => res.json());
     const { data, error } = useSWR(`/api/fetchById?id=${id}`, fetcher)
 
@@ -70,7 +74,7 @@ const CoffeeStore = (initialProps) => {
     }
 
     useEffect(() => {
-        (async function () {
+        const fetchingInEffect = () => {
             if (isEmpty(CoffeeStoreData)) {
                 if (CoffeeStores.length > 0) {
                     const findCoffeeStores = CoffeeStores.find((coffeeStore) => {
@@ -81,7 +85,9 @@ const CoffeeStore = (initialProps) => {
                     return
                 }
             }
-        })
+        }
+        CoffeeStoreData && handleCreateCoffeeStore(CoffeeStoreData);
+        fetchingInEffect();
 
     }, [id, initialProps, initialProps.coffeeStore])
 
@@ -107,7 +113,8 @@ const CoffeeStore = (initialProps) => {
     if (Router.isFallback) {
         return <Loading />;
     }
-    const { name = "", imgUrl = "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80", neighborhood = "", address = "" } = CoffeeStoreData
+    const { name = "", imgUrl = "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80",
+        neighborhood = " ", address = "" } = CoffeeStoreData;
     return (
         <div className={styles.layout}>
             <div className={styles.container}>
@@ -124,11 +131,11 @@ const CoffeeStore = (initialProps) => {
                     </div>
                     <div>
 
-                        <Image className={styles.img} alt={"Coffee Store Image"} src={imgUrl} height={550} width={650}/>
+                        <Image className={styles.img} alt={"Coffee Store Image"} src={imgUrl} height={550} width={650} />
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
-                    {neighborhood !== " " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} alt={""}/>{neighborhood}</p>}
+                    {neighborhood !== " " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} alt={""} />{neighborhood}</p>}
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} alt={""} /> {address}</p>
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} alt={""} /> {votes} </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>
