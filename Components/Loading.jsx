@@ -1,7 +1,10 @@
 
+import ReactLoading from 'react-loading';
+
 const Loading = () => {
     return (
-        <h1>Add a Loading Animation Here</h1>
+        <ReactLoading type={"spin"} color={"white"} height={50} width={50} />
+
     )
 }
 

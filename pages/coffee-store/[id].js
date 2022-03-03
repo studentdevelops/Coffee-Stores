@@ -116,7 +116,7 @@ const CoffeeStore = (initialProps) => {
         return <Loading />;
     }
     const { name = "", imgUrl = "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80",
-        neighborhood = " ", address = "" } = CoffeeStoreData;
+        neighborhood = "", address = "" } = CoffeeStoreData;
     return (
         <div className={styles.layout}>
             <Head>
@@ -141,7 +141,7 @@ const CoffeeStore = (initialProps) => {
                     </div>
                 </div>
                 <div className={classNames(styles.col2, "glass")}>
-                    {neighborhood !== " " && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} alt={""} />{neighborhood}</p>}
+                    {neighborhood.trim() !== "" && <p className={styles.desc}> <Image className={styles.img} src="/icons/home.svg" height={24} width={24} alt={""} />{neighborhood}</p>}
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/locationMarker.svg" height={24} width={24} alt={""} /> {address}</p>
                     <p className={styles.desc} > <Image className={styles.img} src="/icons/star.svg" height={24} width={24} alt={""} /> {votes} </p>
                     <button onClick={onVoteClick} className={classNames(styles.btn, "glass")}>Vote</button>
