@@ -104,11 +104,14 @@ const CoffeeStore = (initialProps) => {
                 },
                 body: JSON.stringify({ id })
             })
+            if (response.json().id) {
+                let count = votes + 1;
+                setVotes(count);
+            }
         } catch (error) {
             console.error({ error })
         }
-        let count = votes + 1;
-        setVotes(count);
+
     }
 
 
